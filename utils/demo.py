@@ -3,6 +3,7 @@ import pickle
 import numpy as np
 import smplx
 import torch
+import os
 
 from models.ntex import NeuralTexStack
 from models.renderer import Renderer
@@ -48,12 +49,20 @@ def load_models(checkpoint_path='data/renderer.pth', ntex_path='data/ntex.pth', 
 
     return renderer, nstack
 
+def build_smplx_model_dict(smplx_model_dir, device):
+    gender2filename = dict(neutral='SMPLX_NEUTRAL.pkl', male='SMPLX_MALE.pkl', female='SMPLX_FEMALE.pkl')
+    gender2path = {k:os.path.join(smplx_model_dir, v) for (k, v) in gender2filename.items()}
+    gender2model = {k:smplx.body_models.SMPLX(v).to(device) for (k, v) in gender2path.items()}
+
+    return gender2model
+
 
 class DemoInferer():
 
-    def __init__(self, checkpoint_path, ntex_path, smplx_model_path, imsize=512, pid_list=None, v_inds_path='data/v_inds.npy',
+    def __init__(self, checkpoint_path, ntex_path, smplx_models_dir, imsize=512, pid_list=None, v_inds_path='data/v_inds.npy',
                  device='cuda:0'):
-        self.smplx_model = smplx.body_models.SMPLX(smplx_model_path).to(device)
+        self.smplx_models_dict = build_smplx_model_dict(smplx_models_dir, device)
+        # smplx.body_models.SMPLX(smplx_model_path).to(device)
         self.renderer, self.nstack = load_models(checkpoint_path, ntex_path, pid_list=pid_list)
         self.v_inds = torch.LongTensor(np.load(v_inds_path)).to(device)
         self.imsize = imsize
@@ -65,14 +74,16 @@ class DemoInferer():
     def load_smplx(self, sample_path):
         with open(sample_path, 'rb') as f:
             smpl_params = pickle.load(f)
+        gender = smpl_params['gender']
 
         for k, v in smpl_params.items():
-            smpl_params[k] = torch.FloatTensor(v).to(self.device)
+            if type(v) == np.ndarray:
+                smpl_params[k] = torch.FloatTensor(v).to(self.device)
 
         smpl_params['left_hand_pose'] = smpl_params['left_hand_pose'][:, :6]
         smpl_params['right_hand_pose'] = smpl_params['right_hand_pose'][:, :6]
 
-        smpl_output = self.smplx_model(**smpl_params)
+        smpl_output = self.smplx_models_dict[gender](**smpl_params)
         vertices = smpl_output.vertices
         vertices = vertices[:, self.v_inds]
         K = smpl_params['camera_intrinsics'].unsqueeze(0)

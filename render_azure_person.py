@@ -9,19 +9,19 @@ from utils.demo import DemoInferer
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='')
-    parser.add_argument('--checkpoint_path', type=str, default='data/checkpoint')
-    parser.add_argument('--smplx_model_path', type=str, default='data/SMPLX_NEUTRAL.pkl')
-    parser.add_argument('--out_path', type=str, default='data/results/')
-    parser.add_argument('--person_id', type=str)
-    parser.add_argument('--smplx_dict_path', type=str)
-    parser.add_argument('--n_rotimgs', type=int, default=8)
-    parser.add_argument('--imsize', type=int, default=512)
-    parser.add_argument('--device', type=str, default='cuda:0')
+    parser.add_argument('--checkpoint_path', type=str, default='data/checkpoint', help='Path to model checkpoint')
+    parser.add_argument('--smplx_models_dir', type=str, default='data/smplx', help='Path to smplx models')
+    parser.add_argument('--out_path', type=str, default='data/results/', help='Path to a directory to save rendered images in')
+    parser.add_argument('--person_id', type=str, help='id of a person from AzurePeople dataset')
+    parser.add_argument('--smplx_dict_path', type=str, help='Path to a .pkl file with smplx parameters')
+    parser.add_argument('--n_rotimgs', type=int, default=8, help='Number of rotation steps to render textured model in')
+    parser.add_argument('--imsize', type=int, default=512, help='Resolution in which to render images (512 recommended)')
+    parser.add_argument('--device', type=str, default='cuda:0', help='Device to run rendering process on')
     args = parser.parse_args()
 
     renderer_path = os.path.join(args.checkpoint_path, 'renderer.pth')
     ntex_path = os.path.join(args.checkpoint_path, 'ntex.pth')
-    inferer = DemoInferer(renderer_path, ntex_path, smplx_model_path=args.smplx_model_path, imsize=args.imsize,
+    inferer = DemoInferer(renderer_path, ntex_path, smplx_models_dir=args.smplx_models_dir, imsize=args.imsize,
                           pid_list=[args.person_id])
 
     assert args.n_rotimgs > 0, 'no image to be saved'
