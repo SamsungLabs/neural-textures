@@ -8,7 +8,7 @@ This code is for the part of the paper describing video-based avatars. For infer
 ### Data
 To use this repository you first need to download model checkpoints and some auxiliary files.
 
-* Download the archive with data from [Google Drive](https://drive.google.com/drive/folders/1YcY3WtCGyq6c0cZIcCG1rll7HGZb_JXc?usp=sharing) and unpack it into `NeuralTextures/data/`. It contains:
+* Download the archive with data from [Google Drive](https://drive.google.com/drive/folders/1-Rzn0fR4Rq2VKS7EUg8hCdJwFe4niNJr?usp=sharing) and unpack it into `NeuralTextures/data/`. It contains:
 	* checkpoints for generative model and encoder network (`data/checkpoint`)
 	* SMPL-X parameters for samples from *AzurePeople* dataset to run inference script on (`data/smplx_dicts`)
 	* Some auxiliary data (`data/uv_render` and `data/*.npy`)
