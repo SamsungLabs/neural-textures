@@ -1,8 +1,8 @@
 
-# StylePeople
+# NeuralTextures
 
-This is repository with inference code for paper **"StylePeople: A Generative Model of Fullbody Human Avatars"** (CVPR21).
-This code is for the part of the paper describing video-based avatars. For inference of generative neural textures model refer to [this repository TODO](https://github.com/)
+This is repository with inference code for paper [**"StylePeople: A Generative Model of Fullbody Human Avatars"**](https://arxiv.org/pdf/2104.08363.pdf) (CVPR21).
+This code is for the part of the paper describing video-based avatars. For inference of generative neural textures model refer to [this repository](https://github.com/dolorousrtur/style-people).
 
 ## Getting started
 ### Data
