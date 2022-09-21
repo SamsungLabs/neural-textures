@@ -1,14 +1,17 @@
 
 # NeuralTextures
 
+### <img align=center src=./assets/icons/project.png width='32'/> [Project](https://saic-violet.github.io/style-people/) &ensp; <img align=center src=./assets/icons/paper.png width='24'/> [Paper](https://arxiv.org/pdf/2104.08363.pdf) &ensp; 
+
 This is repository with inference code for paper [**"StylePeople: A Generative Model of Fullbody Human Avatars"**](https://arxiv.org/pdf/2104.08363.pdf) (CVPR21).
-This code is for the part of the paper describing video-based avatars. For inference of generative neural textures model refer to [this repository](https://github.com/saic-vul/style-people).
+This code is for the part of the paper describing video-based avatars. For inference of generative neural textures model refer to [this repository](https://github.com/dolorousrtur/style-people).
 
 ## Getting started
 ### Data
 To use this repository you first need to download model checkpoints and some auxiliary files.
 
-* Download the archive with data from [Google Drive](https://drive.google.com/drive/folders/1-Rzn0fR4Rq2VKS7EUg8hCdJwFe4niNJr?usp=sharing) and unpack it into `NeuralTextures/data/`. It contains:
+
+* Download the archive with data from [Google Drive](https://drive.google.com/file/d/1mWeBfQUlWVgqzK3R6dSbVWZws2CRQVyJ/view?usp=sharing) and unpack in into `NeuralTextures/data/`. It contains:
 	* checkpoints for generative model and encoder network (`data/checkpoint`)
 	* SMPL-X parameters for samples from *AzurePeople* dataset to run inference script on (`data/smplx_dicts`)
 	* Some auxiliary data (`data/uv_render` and `data/*.npy`)
